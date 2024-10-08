@@ -44,4 +44,17 @@ public class AmazonStepDefinitions {
         amazonPage.searchBox.sendKeys("nokia");
         amazonPage.searchBox.submit();
     }
+
+
+    @Given("User goes to {string} page")
+    public void userGoesToPage(String url) {
+        Driver.getDriver().get(ConfigReader.getProperties(url));
+    }
+
+    @When("search for {string} in the search box")
+    public void searchForInTheSearchBox(String searchWord) {
+        amazonPage.handleCaptcha();
+        amazonPage.searchBox.sendKeys(searchWord);
+        amazonPage.searchBox.submit();
+    }
 }

@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
         },
         features = "src/test/resources/features",
         glue = {"techproed/step_definitions"},
-        tags ="@US003",
+        tags ="@US005",
         dryRun = false
 
 )
