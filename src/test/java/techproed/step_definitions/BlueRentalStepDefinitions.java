@@ -1,7 +1,11 @@
 package techproed.step_definitions;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
+import org.openqa.selenium.Keys;
 import techproed.pages.BlueRentalCarPage;
 import techproed.utilities.ConfigReader;
 import techproed.utilities.Driver;
@@ -24,4 +28,22 @@ public class BlueRentalStepDefinitions {
         blueRentalCarPage.passwordBox.sendKeys(ConfigReader.getProperties("blueRentalPassword"));
     }
 
+    @And("user must enter {string} and {string}")
+    public void userMustEnterAnd(String email, String password) {
+        blueRentalCarPage.emailBox.sendKeys(email);
+        blueRentalCarPage.passwordBox.sendKeys(password, Keys.ENTER);
+    }
+
+    @Then("verifies user is logged in")
+    public void verifiesUserIsLoggedIn() {
+        Assert.assertNotEquals("Login",blueRentalCarPage.dropDownMenu.getText());
+    }
+    @Then("verifies user is logged in {string}")
+    public void verifiesUsersEmailIsLoggedIn(String email) {
+        blueRentalCarPage.dropDownMenu.click();
+        blueRentalCarPage.profileLink.click();
+
+        Assert.assertEquals(email,blueRentalCarPage.emailVerify.getText());
+
+    }
 }

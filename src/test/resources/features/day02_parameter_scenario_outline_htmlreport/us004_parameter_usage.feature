@@ -11,7 +11,7 @@
 Feature: US004 Amazon Test
 
   Background:
-    Given User goes to "amazonUrl" page
+    Given user goes to "amazonUrl" page
 
   Scenario: TC001 Search for iphone in the search box
     When search for "iphone" in the search box

@@ -46,7 +46,7 @@ public class AmazonStepDefinitions {
     }
 
 
-    @Given("User goes to {string} page")
+    @Given("user goes to {string} page")
     public void userGoesToPage(String url) {
         Driver.getDriver().get(ConfigReader.getProperties(url));
     }
