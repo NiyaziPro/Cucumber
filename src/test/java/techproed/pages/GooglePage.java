@@ -25,7 +25,7 @@ public class GooglePage {
         try {
             ReusableMethods.click(cookiesHandle);
         } catch (Exception e) {
-            // cookie'nin çıkmaması durumunda, alacağımız exception'ı, burayı boş bırakarak ignore etmiş oluruz
+            // If the cookie is not displayed, we will ignore the exception we will receive by leaving this blank.
         }
     }
 
