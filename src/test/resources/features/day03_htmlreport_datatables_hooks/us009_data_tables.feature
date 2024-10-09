@@ -20,3 +20,13 @@ Feature: US009 Google search Test
       | Mercedes |
       | Porsche  |
     And closes the page
+
+  @US009b
+  Scenario: TC003 Search vehicles on Google page
+    Given user goes to "googleUrl" page
+    And user searches with the given information second way
+      | Vehicles |
+      | Audi     |
+      | Mercedes |
+      | Porsche  |
+    And closes the page

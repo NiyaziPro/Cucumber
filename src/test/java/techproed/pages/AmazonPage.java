@@ -9,13 +9,13 @@ import techproed.utilities.ReusableMethods;
 public class AmazonPage {
 
     /*
-    PageFactory.initElements() kodu bu classtaki ögeleri webdriver ile eslestirir
-    Bu sayede classtaki webelementlere erismek icin @FindBy gibi PageFactory ye yardimci olan
-    annotationlar kullanilabilir
+    PageFactory.initElements() code matches the elements in this class with the webdriver.
+    In this way, annotations that help PageFactory such as @FindBy can be used to access the webelements in the class
     */
 
     public AmazonPage() {
-        PageFactory.initElements(Driver.getDriver(), this); //initElements(); bu method, page class içerisinde depolayacağımız web elementlerin driver aracılığıyla başlatılmaısnı sağlar
+        PageFactory.initElements(Driver.getDriver(), this);
+        //initElements(); This method allows the web elements that we will store in the page class to be initialized via the driver.
     }
 
     @FindBy(id = "twotabsearchtextbox")
@@ -29,7 +29,7 @@ public class AmazonPage {
         try {
             ReusableMethods.click(captchaHandling);
         } catch (Exception e) {
-            // captcha'nin çıkmaması durumunda, alacağımız exception'ı, burayı boş bırakarak ignore etmiş oluruz
+            // If the captcha does not appear, we will ignore the exception we will receive by leaving this blank.
         }
     }
 

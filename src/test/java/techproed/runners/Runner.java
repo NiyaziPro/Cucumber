@@ -11,13 +11,13 @@ import org.junit.runner.RunWith;
                 "json:target/json-reports/cucumber.json",
                 "junit:target/xml-reports/cucumber.xml",
 
-                "pretty", // console'da senaryolarla ilgili ayrintili bilgiler verir
+                "pretty", // console'da senaryolarla ilgili ayrintili bilgiler verir - Provides detailed information about scenarios in the console
 
 
         },
         features = "src/test/resources/features",
-        glue = {"techproed/step_definitions"},
-        tags ="@US009a",
+        glue = {"techproed/step_definitions","techproed/hooks"},
+        tags ="@US011",
         dryRun = false
 
 )

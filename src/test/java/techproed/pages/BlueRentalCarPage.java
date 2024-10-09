@@ -13,7 +13,7 @@ public class BlueRentalCarPage {
 
 
 
-    @FindBy(xpath = " //a[.=' Login']")
+    @FindBy(xpath = "//a[text()=' Login']")
     public WebElement loginButton;
 
     @FindBy(id = "formBasicEmail")
@@ -39,5 +39,7 @@ public class BlueRentalCarPage {
 
     @FindBy(xpath = "//*[.='OK']")
     public WebElement oKButton;
+
+
 
 }

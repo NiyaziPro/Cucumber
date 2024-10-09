@@ -11,6 +11,8 @@ import techproed.pages.GooglePage;
 import techproed.utilities.Driver;
 import techproed.utilities.WaitUtils;
 
+import java.util.List;
+
 public class GoogleStepDefinitions {
     GooglePage googlePage = new GooglePage();
 
@@ -41,6 +43,20 @@ public class GoogleStepDefinitions {
             googlePage.searchBox.sendKeys(data.asList().get(i), Keys.ENTER);
             WaitUtils.waitFor(1);
             Assert.assertTrue(Driver.getDriver().getTitle().contains(data.asList().get(i)));
+            WaitUtils.waitFor(1);
+            googlePage.searchBox.clear();
+        }
+
+    }
+
+    @And("user searches with the given information second way")
+    public void userSearchesWithTheGivenInformationSecondWay(List<String> list) {
+        googlePage.handleCookies();
+
+        for (String w : list) {
+            googlePage.searchBox.sendKeys(w, Keys.ENTER);
+            WaitUtils.waitFor(1);
+            Assert.assertTrue(Driver.getDriver().getTitle().contains(w));
             WaitUtils.waitFor(1);
             googlePage.searchBox.clear();
         }
