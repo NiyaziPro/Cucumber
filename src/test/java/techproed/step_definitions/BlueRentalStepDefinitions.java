@@ -10,8 +10,10 @@ import org.openqa.selenium.Keys;
 import techproed.pages.BlueRentalCarPage;
 import techproed.utilities.ConfigReader;
 import techproed.utilities.Driver;
+import techproed.utilities.ExcelUtils;
 import techproed.utilities.WaitUtils;
 
+import java.nio.file.Files;
 import java.util.List;
 
 public class BlueRentalStepDefinitions {
@@ -58,7 +60,7 @@ public class BlueRentalStepDefinitions {
     public void loginWithTheGivenUserInformation(DataTable data) {
         List<List<String>> emailPassword = data.asLists();
 
-        for (int i = 1; i < emailPassword.size() ; i++) {
+        for (int i = 1; i < emailPassword.size(); i++) {
 
             String email = emailPassword.get(i).get(0);
             String password = emailPassword.get(i).get(1);
@@ -71,7 +73,7 @@ public class BlueRentalStepDefinitions {
         }
 
         //2.yol
-        for (int i = 1; i < data.asLists().size() ; i++) {
+        for (int i = 1; i < data.asLists().size(); i++) {
 
             String email = data.row(i).get(0);
             String password = data.row(i).get(1);
@@ -112,13 +114,24 @@ public class BlueRentalStepDefinitions {
             blueRentalCarPage.logoutLink.click();
             blueRentalCarPage.oKButton.click();
             blueRentalCarPage.loginButton.click();
-
-
-
         }
-
-
     }
 
 
+    @And("login with the information on the {string} page in Excel")
+    public void loginWithTheInformationOnThePageInExcel(String sheetName) {
+
+        String path = "src/test/resources/adminTestData.xlsx";
+        ExcelUtils excelUtils = new ExcelUtils(path, sheetName);
+
+        for (int i = 1; i < excelUtils.rowCount(); i++) {
+            String email = excelUtils.getCellData(i, 0);
+            String password = excelUtils.getCellData(i, 1);
+            blueRentalCarPage.emailBox.sendKeys(email);
+            blueRentalCarPage.passwordBox.sendKeys(password, Keys.ENTER);
+            WaitUtils.waitFor(1);
+            Driver.getDriver().navigate().back();
+        }
+
+    }
 }

@@ -30,6 +30,7 @@ public class Hook {
 
     @After("@mercedes")
     public void tearDown2(Scenario scenario) throws Exception {
+
         if (scenario.isFailed()){
             TakesScreenshot ts = (TakesScreenshot) Driver.getDriver();
             scenario.attach(ts.getScreenshotAs(OutputType.BYTES),"image/png", scenario.getName());

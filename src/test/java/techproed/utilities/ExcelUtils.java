@@ -1,7 +1,8 @@
 package techproed.utilities;
 
 import org.apache.poi.ss.usermodel.*;
-import org.testng.Assert;
+import org.junit.Assert;
+
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -37,7 +38,7 @@ public class ExcelUtils {
             // Worksheet'i alma
             workSheet = workBook.getSheet(sheetName);
             // Sayfanın veriye sahip olup olmadığını doğrulama
-            Assert.assertNotNull(workSheet, "Worksheet: \"" + sheetName + "\" bulunamadı\n");
+            Assert.assertNotNull(String.valueOf(workSheet), "Worksheet: \"" + sheetName + "\" bulunamadı\n");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

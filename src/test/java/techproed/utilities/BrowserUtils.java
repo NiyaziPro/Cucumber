@@ -190,7 +190,7 @@ public class BrowserUtils {
         try {
             assertTrue("Element is not visible: " + element, element.isDisplayed());
         } catch (NoSuchElementException e) {
-            org.testng.Assert.fail("Element is not found: " + element);
+            fail("Element is not found: " + element);
         }
     }
 
@@ -203,7 +203,7 @@ public class BrowserUtils {
         try {
             assertTrue("Element not visible: " + by, Driver.getDriver().findElement(by).isDisplayed());
         } catch (NoSuchElementException e) {
-            org.testng.Assert.fail("Element not found: " + by);
+            fail("Element not found: " + by);
         }
     }
 
