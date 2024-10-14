@@ -14,7 +14,7 @@ Feature:US011 - Google Test
     Given user goes to "googleUrl" page
     When searched for "mercedes g class" in the search box
     But user waits 2 seconds
-    Then verifies if the page title contains "mercedesss"
+    Then verifies if the page title contains "mercedes"
     And closes the page
 
   @porsche
