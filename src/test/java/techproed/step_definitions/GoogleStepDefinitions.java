@@ -62,4 +62,9 @@ public class GoogleStepDefinitions {
         }
 
     }
+
+    @And("close the page")
+    public void closeThePage() {
+        Driver.closeDriver();
+    }
 }

@@ -68,8 +68,8 @@ public class MedunnaStepDefinitions {
         BrowserUtils.dropdownSelectByIndex(medunnaPage.roomTypeSelect,type-1);
     }
 
-    @And("checks the Status checkbox")
-    public void checksTheStatusCheckbox() {
+    @And("check the Status checkbox")
+    public void checkTheStatusCheckbox() {
         if (!medunnaPage.statusCheckbox.isSelected()){
             medunnaPage.statusCheckbox.click();
         }
