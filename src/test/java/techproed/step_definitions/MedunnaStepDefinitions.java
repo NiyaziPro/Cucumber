@@ -3,14 +3,12 @@ package techproed.step_definitions;
 import com.github.javafaker.Faker;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.But;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import techproed.pages.MedunnaPage;
-import techproed.utilities.ActionsUtils;
-import techproed.utilities.BrowserUtils;
-import techproed.utilities.ConfigReader;
-import techproed.utilities.WaitUtils;
+import techproed.utilities.*;
 
 public class MedunnaStepDefinitions {
     MedunnaPage medunnaPage = new MedunnaPage();
@@ -134,5 +132,57 @@ public class MedunnaStepDefinitions {
     public void verifyThatTheCreatedRoomIsInTheList2() {
         Assert.assertTrue(medunnaPage.roomList.stream().anyMatch(t->t.getText().contains(randomRoomNumber)));
 
+    }
+
+    @Given("the user navigates to the {string} page")
+    public void theUserNavigatesToThePage(String url) {
+        Driver.getDriver().get(ConfigReader.getProperties(url));
+    }
+
+    @And("enter username in the Username field")
+    public void enterUsernameInTheUsernameField() {
+        medunnaPage.userNameTextBox.sendKeys(ConfigReader.getProperties("medunna_username"));
+    }
+
+    @And("enter password in the Password field")
+    public void enterPasswordInThePasswordField() {
+        medunnaPage.passwordBox.sendKeys(ConfigReader.getProperties("medunna_password"));
+    }
+
+    @And("enter a room number in the Room Number field")
+    public void enterARoomNumberInTheRoomNumberField() {
+        int roomNumber = Faker.instance().number().numberBetween(100000,1000000);
+        medunnaPage.roomNumberBox.sendKeys(roomNumber+"");
+    }
+
+    @And("select SUIT from the Room Type menu")
+    public void selectSUITFromTheRoomTypeMenu() {
+        BrowserUtils.dropdownSelectByVisibleText(medunnaPage.roomTypeSelect,"SUITE");
+    }
+
+    @And("click on the Status checkbox")
+    public void clickOnTheStatusCheckbox() {
+        medunnaPage.statusCheckbox.click();
+    }
+
+    @And("enter {string} in the Price field")
+    public void enterInThePriceField(String price) {
+        medunnaPage.priceBox.sendKeys(price);
+    }
+
+    @And("enter {string} in the Description field")
+    public void enterInTheDescriptionField(String description) {
+        medunnaPage.descriptionBox.sendKeys(description);
+    }
+
+    @And("click on the Save button")
+    public void clickOnTheSaveButton() {
+        medunnaPage.saveButton.click();
+    }
+
+    @Then("verify a new room created successfully")
+    public void verifyANewRoomCreatedSuccessfully() {
+        WaitUtils.waitForVisibility(medunnaPage.successfullyCreatedMsg,20);
+        Assert.assertTrue(medunnaPage.successfullyCreatedMsg.isDisplayed());
     }
 }
