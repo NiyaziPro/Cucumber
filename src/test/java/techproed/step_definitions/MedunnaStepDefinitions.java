@@ -1,18 +1,20 @@
 package techproed.step_definitions;
 
 import com.github.javafaker.Faker;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.But;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
+import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.*;
 import org.junit.Assert;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import techproed.pages.MedunnaPage;
 import techproed.utilities.*;
 
+import java.util.List;
+
 public class MedunnaStepDefinitions {
     MedunnaPage medunnaPage = new MedunnaPage();
-    Faker faker =new Faker();
+    Faker faker = new Faker();
+
     @Then("click on the User icon")
     public void clickOnTheUserIcon() {
         medunnaPage.accountMenuDropDown.click();
@@ -55,20 +57,21 @@ public class MedunnaStepDefinitions {
     }
 
     String roomNumber;
+
     @Then("enter room number in the Room Number field: {string}")
     public void enterRoomNumberInTheRoomNumberField(String roomNumber) {
-        this.roomNumber=roomNumber;
+        this.roomNumber = roomNumber;
         medunnaPage.roomNumberBox.sendKeys(roomNumber);
     }
 
     @And("select SUIT from the Room Type menu - select: {int}")
     public void selectSUITFromTheRoomTypeMenuSelect(int type) {
-        BrowserUtils.dropdownSelectByIndex(medunnaPage.roomTypeSelect,type-1);
+        BrowserUtils.dropdownSelectByIndex(medunnaPage.roomTypeSelect, type - 1);
     }
 
     @And("check the Status checkbox")
     public void checkTheStatusCheckbox() {
-        if (!medunnaPage.statusCheckbox.isSelected()){
+        if (!medunnaPage.statusCheckbox.isSelected()) {
             medunnaPage.statusCheckbox.click();
         }
     }
@@ -90,7 +93,7 @@ public class MedunnaStepDefinitions {
 
     @And("verify that a room has been successfully created")
     public void verifyThatARoomHasBeenSuccessfullyCreated() {
-        WaitUtils.waitForVisibility(medunnaPage.successfullyCreatedMsg,20);
+        WaitUtils.waitForVisibility(medunnaPage.successfullyCreatedMsg, 20);
         Assert.assertTrue(medunnaPage.successfullyCreatedMsg.isDisplayed());
 
     }
@@ -108,11 +111,12 @@ public class MedunnaStepDefinitions {
 
     @Then("verify that the created room is in the list")
     public void verifyThatTheCreatedRoomIsInTheList() {
-        Assert.assertTrue(medunnaPage.roomList.stream().anyMatch(t->t.getText().contains(roomNumber)));
+        Assert.assertTrue(medunnaPage.roomList.stream().anyMatch(t -> t.getText().contains(roomNumber)));
 
     }
 
     String randomRoomNumber;
+
     @Then("enter room number in the Room Number field")
     public void enterRoomNumberInTheRoomNumberField() {
         randomRoomNumber = faker.number().digits(8);
@@ -128,9 +132,10 @@ public class MedunnaStepDefinitions {
     public void enterDescriptionInTheDescriptionField() {
         medunnaPage.descriptionBox.sendKeys(faker.lorem().paragraph());
     }
+
     @Then("verify that the created room is in the list.")
     public void verifyThatTheCreatedRoomIsInTheList2() {
-        Assert.assertTrue(medunnaPage.roomList.stream().anyMatch(t->t.getText().contains(randomRoomNumber)));
+        Assert.assertTrue(medunnaPage.roomList.stream().anyMatch(t -> t.getText().contains(randomRoomNumber)));
 
     }
 
@@ -151,13 +156,13 @@ public class MedunnaStepDefinitions {
 
     @And("enter a room number in the Room Number field")
     public void enterARoomNumberInTheRoomNumberField() {
-        int roomNumber = Faker.instance().number().numberBetween(100000,1000000);
-        medunnaPage.roomNumberBox.sendKeys(roomNumber+"");
+        int roomNumber = Faker.instance().number().numberBetween(100000, 1000000);
+        medunnaPage.roomNumberBox.sendKeys(roomNumber + "");
     }
 
     @And("select SUIT from the Room Type menu")
     public void selectSUITFromTheRoomTypeMenu() {
-        BrowserUtils.dropdownSelectByVisibleText(medunnaPage.roomTypeSelect,"SUITE");
+        BrowserUtils.dropdownSelectByVisibleText(medunnaPage.roomTypeSelect, "SUITE");
     }
 
     @And("click on the Status checkbox")
@@ -182,7 +187,7 @@ public class MedunnaStepDefinitions {
 
     @Then("verify a new room created successfully")
     public void verifyANewRoomCreatedSuccessfully() {
-        WaitUtils.waitForVisibility(medunnaPage.successfullyCreatedMsg,20);
+        WaitUtils.waitForVisibility(medunnaPage.successfullyCreatedMsg, 20);
         Assert.assertTrue(medunnaPage.successfullyCreatedMsg.isDisplayed());
     }
 
@@ -234,14 +239,47 @@ public class MedunnaStepDefinitions {
 
     @Then("verify a registration created successfully")
     public void verifyARegistrationCreatedSuccessfully() {
-        WaitUtils.waitForVisibility(medunnaPage.registrationSavedText,20);
+        WaitUtils.waitForVisibility(medunnaPage.registrationSavedText, 20);
         Assert.assertTrue(medunnaPage.registrationSavedText.isDisplayed());
-       // System.out.println(medunnaPage.registrationSuccessOrNotMsg.getText());
+        // System.out.println(medunnaPage.registrationSuccessOrNotMsg.getText());
 
     }
 
     @Then("verify a registration not created successfully")
     public void verifyARegistrationNotCreatedSuccessfully() {
         Assert.assertTrue(medunnaPage.requiredMessageList.stream().allMatch(WebElement::isDisplayed));
+    }
+
+    @Then("verify the {string} validation message is displayed")
+    public void verifyTheValidationMessageIsDisplayed(String errorMsg) {
+        WaitUtils.waitFor(3);
+        medunnaPage.requiredMessageList.forEach(t -> System.out.println(t.getText()));
+        Assert.assertTrue(medunnaPage.requiredMessageList.stream().anyMatch(t -> t.getText().contains(errorMsg)));
+    }
+
+    @When("user provides the following valid data")
+    public void userProvidesTheFollowingValidData(DataTable data) {
+        List<String> list = data.row(1);
+        medunnaPage.ssnTextBox.sendKeys(list.get(0));
+        WaitUtils.waitFor(2);
+        medunnaPage.firstNameTextBox.sendKeys(list.get(1));
+        WaitUtils.waitFor(2);
+        medunnaPage.lastNameTextBox.sendKeys(list.get(2));
+        WaitUtils.waitFor(2);
+        medunnaPage.userNameTextBox.sendKeys(list.get(3));
+        WaitUtils.waitFor(2);
+        medunnaPage.emailTextBox.sendKeys(list.get(4));
+        WaitUtils.waitFor(2);
+        medunnaPage.firstPasswordTextBox.sendKeys(list.get(5));
+        WaitUtils.waitFor(2);
+        medunnaPage.secondPasswordTextBox.sendKeys(list.get(6));
+
+
+    }
+
+    @Then("verify the {string} message is displayed")
+    public void verifyTheMessageIsDisplayed(String msg) {
+        WaitUtils.waitForVisibility(medunnaPage.registrationSavedText,15);
+        Assert.assertEquals(msg, medunnaPage.registrationSavedText.getText());
     }
 }
