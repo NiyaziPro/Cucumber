@@ -59,10 +59,10 @@ public class MedunnaPage {
     @FindBy(id = "secondPassword")
     public WebElement secondPasswordTextBox;
 
-    @FindBy(id = "register-submit")
+    @FindBy(xpath = "//button[@type='submit']")
     public WebElement registerSubmitButton;
 
-    @FindBy(xpath = "//*[.='Registration Saved']")
+    @FindBy(xpath = "//*[text()='Registration Saved']")
     public WebElement registrationSavedText;
 
     ////////////////// -- Password Strength -- //////////////////////
@@ -120,6 +120,11 @@ public class MedunnaPage {
     @FindBy(xpath = "//tbody/tr/td[2]")
     public List<WebElement> roomList;
 
+    @FindBy(className = "Toastify__toast-body")
+    public WebElement registrationSuccessOrNotMsg;
+
+    @FindBy(className = "invalid-feedback")
+    public List<WebElement> requiredMessageList;
 
 
 

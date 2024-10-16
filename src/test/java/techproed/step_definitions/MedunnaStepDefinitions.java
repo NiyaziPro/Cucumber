@@ -185,4 +185,63 @@ public class MedunnaStepDefinitions {
         WaitUtils.waitForVisibility(medunnaPage.successfullyCreatedMsg,20);
         Assert.assertTrue(medunnaPage.successfullyCreatedMsg.isDisplayed());
     }
+
+    @And("click on the Register")
+    public void clickOnTheRegister() {
+        medunnaPage.registerButton.click();
+    }
+
+    @And("enter {string} in the SSN field")
+    public void enterInTheSSNField(String ssn) {
+        medunnaPage.ssnTextBox.sendKeys(ssn);
+    }
+
+    @And("enter {string} in the First Name field")
+    public void enterInTheFirstNameField(String firstName) {
+        medunnaPage.firstNameTextBox.sendKeys(firstName);
+    }
+
+    @And("enter {string} in the Last Name field")
+    public void enterInTheLastNameField(String lastName) {
+        medunnaPage.lastNameTextBox.sendKeys(lastName);
+    }
+
+    @And("enter {string} in the Username field")
+    public void enterInTheUsernameField(String username) {
+        medunnaPage.userNameTextBox.sendKeys(username);
+    }
+
+    @And("enter {string} in the Email field")
+    public void enterInTheEmailField(String email) {
+        medunnaPage.emailTextBox.sendKeys(email);
+    }
+
+    @And("enter {string} in the New Password field")
+    public void enterInTheNewPasswordField(String password) {
+        medunnaPage.firstPasswordTextBox.sendKeys(password);
+    }
+
+    @And("enter {string} in the New password confirmation field")
+    public void enterInTheNewPasswordConfirmationField(String confirmPassword) {
+        medunnaPage.secondPasswordTextBox.sendKeys(confirmPassword);
+    }
+
+    @And("click Register button")
+    public void clickRegisterButton() {
+        ActionsUtils.scrollToElementUsingActions(medunnaPage.registerSubmitButton);
+        medunnaPage.registerSubmitButton.click();
+    }
+
+    @Then("verify a registration created successfully")
+    public void verifyARegistrationCreatedSuccessfully() {
+        WaitUtils.waitForVisibility(medunnaPage.registrationSavedText,20);
+        Assert.assertTrue(medunnaPage.registrationSavedText.isDisplayed());
+       // System.out.println(medunnaPage.registrationSuccessOrNotMsg.getText());
+
+    }
+
+    @Then("verify a registration not created successfully")
+    public void verifyARegistrationNotCreatedSuccessfully() {
+        Assert.assertTrue(medunnaPage.requiredMessageList.stream().allMatch(WebElement::isDisplayed));
+    }
 }
