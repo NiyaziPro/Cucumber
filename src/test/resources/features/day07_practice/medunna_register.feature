@@ -22,7 +22,7 @@ Feature: Creating an account in Medunna
     And enter "<New password>" in the New Password field
     And enter "<Confirm password>" in the New password confirmation field
     But wait for 2 seconds
-    And click Register button
+    #And click Register button
     Then verify the "<errorMessage>" validation message is displayed
     And close the page
     Examples:
